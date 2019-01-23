@@ -26,4 +26,7 @@ COPY --from=builder /app/build /usr/share/nginx/html
 
 ```
 
+### Setup Travis
+- write .travis.yml
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
