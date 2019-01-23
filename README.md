@@ -27,6 +27,10 @@ COPY --from=builder /app/build /usr/share/nginx/html
 ```
 
 ### Setup Travis
+- track your repo in travis website.
 - write .travis.yml
+- Next time when you push to the remote origin, travis will run the instruction in .travis.yml
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
