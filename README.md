@@ -57,7 +57,8 @@ Then, you can access it by visiting localhost:8080 on your browser.
   3) Go to more options
   4) Go to settings, set the AWS_ACCESS_KEY and AWS_SECRET_KEY
 12. Go back to .travis.yml file, and set the env variables.
-
+13. To see, if it actually deploys, commit and push to the master.
+14. Go back to Travis CI and AWS Beanstalk to see the progress/status.
 
 
 
