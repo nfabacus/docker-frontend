@@ -60,6 +60,55 @@ Then, you can access it by visiting localhost:8080 on your browser.
 13. To see, if it actually deploys, commit and push to the master.
 14. Go back to Travis CI and AWS Beanstalk to see the progress/status.
 
+Dockerfile
+```
+# Builder Phase
+FROM node:alpine as builder
+WORKDIR '/app'
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Run Phase
+FROM nginx
+EXPOSE 80  # Elasticbeanstalk will map this to its port automatically.
+COPY --from=builder /app/build /usr/share/nginx/html
+
+
+```
+
+
+.travis.yml
+```
+sudo: required # super user permission
+services:
+  - docker # travis, we need a copy of docker running
+
+before_install:
+  - docker build -t nfabacus/docker-frontend -f Dockerfile.dev .
+  # use current directory (.) to build docker image. tag the image with '-t nfabacus/docker-frontend'
+
+script:
+  - docker run nfabacus/docker-frontend npm run test -- --coverage # with coverage test will exit once complete.
+
+deploy:
+  provider: elasticbeanstalk  # deployment service provider
+  region: eu-west-2  #specify the region the elasticbeanstalk instance was created.
+  app: "docker-frontend"  # app name in elesticbeanstalk
+  env: "DockerFrontend-env"  # get the env name from the elasticbeanstalk
+  bucket_name: "elasticbeanstalk-eu-west-2-689483565571" # Get this from S3 Bucket in the AWS console.
+  bucket_path: "docker-frontend" # app name in elesticbeanstalk will be the path for the bucket.
+  on:
+    branch: master  # deploy the app only when the code is pushed to the master branch
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
+
+
+```
+
+
 
 
 

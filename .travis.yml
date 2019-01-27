@@ -1,24 +1,23 @@
-sudo: required # super user permission
+sudo: required
 services:
-  - docker # travis, we need a copy of docker running
+  - docker
 
 before_install:
   - docker build -t nfabacus/docker-frontend -f Dockerfile.dev .
-  # use current directory (.) to build docker image. tag the image with '-t nfabacus/docker-frontend'
 
 script:
-  - docker run nfabacus/docker-frontend npm run test -- --coverage # with coverage test will exit once complete.
+  - docker run nfabacus/docker-frontend npm run test -- --coverage
 
 deploy:
-  provider: elasticbeanstalk  # deployment service provider
-  region: eu-west-2  #specify the region the elasticbeanstalk instance was created.
-  app: "docker-frontend"  # app name in elesticbeanstalk
-  env: "DockerFrontend-env"  # get the env name from the elasticbeanstalk
-  bucket_name: "elasticbeanstalk-eu-west-2-689483565571" # Get this from S3 Bucket in the AWS console.
-  bucket_path: "docker-frontend" # app name in elesticbeanstalk will be the path for the bucket.
+  provider: elasticbeanstalk
+  region: eu-west-2
+  app: "docker-frontend"
+  env: "DockerFrontend-env"
+  bucket_name: "elasticbeanstalk-eu-west-2-689483565571"
+  bucket_path: "docker-frontend"
   on:
-    branch: master  # deploy the app only when the code is pushed to the master branch
+    branch: master
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key:
-    secure: "$AWS_SECRET_KEY"
+    secure: $AWS_SECRET_KEY
 
