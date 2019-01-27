@@ -8,3 +8,17 @@ before_install:
 
 script:
   - docker run nfabacus/docker-frontend npm run test -- --coverage # with coverage test will exit once complete.
+
+deploy:
+  provider: elasticbeanstalk  # deployment service provider
+  region: eu-west-2  #specify the region the elasticbeanstalk instance was created.
+  app: "docker-frontend"  # app name in elesticbeanstalk
+  env: "DockerFrontend-env"  # get the env name from the elasticbeanstalk
+  bucket_name: "elasticbeanstalk-eu-west-2-689483565571" # Get this from S3 Bucket in the AWS console.
+  bucket_path: "docker-frontend" # app name in elesticbeanstalk will be the path for the bucket.
+  on:
+    branch: master  # deploy the app only when the code is pushed to the master branch
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
+
