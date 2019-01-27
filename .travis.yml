@@ -3,7 +3,8 @@ services:
   - docker # travis, we need a copy of docker running
 
 before_install:
-  - docker build -t nfabacus/docker-frontend -f Dockerfile.dev . # use current directory to build docker image.
+  - docker build -t nfabacus/docker-frontend -f Dockerfile.dev .
+  # use current directory (.) to build docker image. tag the image with '-t nfabacus/docker-frontend'
 
 script:
-  - docker run nfabacus/docker-frontend npm run test -- --coverage
+  - docker run nfabacus/docker-frontend npm run test -- --coverage # with coverage test will exit once complete.
