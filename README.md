@@ -46,7 +46,8 @@ Then, you can access it by visiting localhost:8080 on your browser.
 3. Select web server environment
 4. Go to Base configuration and select Docker for Platform.
 5. Click Create environment
-6. update .travis.yml file for deploy
+6. update .travis.yml file for deploy <br />
+   **Note: AWS will automatically build an image out of the Dockerfile**
 7. Go to IAM section in AWS
 8. Add user, then select Programmatic access for Access type (for travis to access)
 9. For set permissions page, select 'Aattach existing policies directly'
